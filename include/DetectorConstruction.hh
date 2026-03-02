@@ -1,14 +1,14 @@
 #ifndef DetectorConstruction_h     //Header guards
 #define DetectorConstruction_h 1
 
-#include "G4UserDetectorConstruction.hh"
-#include "globals.hh"
+#include "G4VUserDetectorConstruction.hh"   //abstract base class
+#include "globals.hh"                      //unit systems, G4 types like G4int
 
 // Forward Declaration
 class G4PhysicalVolume;
 class G4LogicalVolume;
 
-class DetectorConstruction : public G4UserDetectorConstruction
+class DetectorConstruction : public G4VUserDetectorConstruction
 {
 public:
 	DetectorConstruction();
@@ -16,7 +16,7 @@ public:
 
 	virtual G4PhysicalVolume* Construct();
 
-private:
+protected:
 	G4LogicalVolume* fPhantomLogical;   //for later scoring access
 };
 
