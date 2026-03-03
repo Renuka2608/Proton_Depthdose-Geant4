@@ -1,13 +1,13 @@
 #ifndef RunAction_h
 #define RunAction_h 1
 
-#include "G4VUserRunAction.hh"
+#include "G4UserRunAction.hh"
 #include "G4Accumulable.hh"
 #include "globals.hh"
 
 class G4Run;
 
-class RunAction : public G4VUserRunAction
+class RunAction : public G4UserRunAction
 {
 public:
 	RunAction();
