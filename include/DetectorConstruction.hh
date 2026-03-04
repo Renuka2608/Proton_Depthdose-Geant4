@@ -5,7 +5,7 @@
 #include "globals.hh"                      //unit systems, G4 types like G4int
 
 // Forward Declaration
-class G4PhysicalVolume;
+class G4VPhysicalVolume;
 class G4LogicalVolume;
 
 class DetectorConstruction : public G4VUserDetectorConstruction
@@ -14,7 +14,7 @@ public:
 	DetectorConstruction();
 	virtual ~DetectorConstruction();
 
-	virtual G4PhysicalVolume* Construct();
+	virtual G4VPhysicalVolume* Construct();
 
 protected:
 	G4LogicalVolume* fPhantomLogical;   //for later scoring access
