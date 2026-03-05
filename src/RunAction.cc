@@ -12,6 +12,8 @@
 #include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
 #include <cmath>
+#include "G4AnalysisManager.hh"
+
 
 RunAction::RunAction()
 {
@@ -20,6 +22,16 @@ RunAction::RunAction()
 	accumulableManager->Regiter(fEdep);
 	accumulableManager->Regiter(fEdep2);
 
+	auto analysisManager = G4AnalysisManager::Instance();
+
+	analysisManager->CreateH1(
+		"depthDose",
+		"Depth Dose Distribution",
+		300,
+		0.,                                 //300 bins and (0–300 mm) phantom
+		300
+	);
+		
 }
 void RunAction::BeginOfRunAction(const G4Run*)
 {
@@ -30,6 +42,7 @@ void RunAction::BeginOfRunAction(const G4Run*)
 	auto accumulableManager = G4AccumulableManager::Instance();
 	accumulableManager->Reset();                                  //Resets total energy before starting the run
 
+	analysisManager->OpenFile("braggPeak");                       //open root file
 }
 
 void RunAction::EndOfRunAction(const G4Run* run)
@@ -70,6 +83,9 @@ void RunAction::EndOfRunAction(const G4Run* run)
 		<< G4BestUnit(rmsDose, "Dose")
 		<< G4endl;
 	G4cout << "=============================================" << G4endl;
+
+	analysisManager->Write();
+	analysisManager->CloseFile();              //save root file
 
 }
 
