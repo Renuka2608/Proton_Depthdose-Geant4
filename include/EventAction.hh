@@ -13,7 +13,7 @@ public:
 	EventAction(RunAction* runAction);           //EventAction receives a pointer to RunAction.
 	~EventAction() override = default;
 
-	void BeginOfEventAction(c  G4LogicalVolume* fScoringVolume = nullptr;onst G4Event* event) override;
+	void BeginOfEventAction(const G4Event* event) override;
 	void EndOfEventAction(const G4Event* event) override;
 
 	void  AddEdep(G4double edep) { fEdep += edep; }
