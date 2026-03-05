@@ -9,6 +9,7 @@
 #include "G4UIExecutive.hh"
 #include "G4UImanager.hh"
 #include "G4VisExecutive.hh"
+#include "G4String.hh"
 
 int main(int argc, char** argv)
 {
@@ -38,7 +39,7 @@ int main(int argc, char** argv)
 		runManager->SetUserInitialization(new ActionInitialization());
 
 // Visualization Manager
-		auto visManager = new G4VisExecutive(argc, argv);
+		auto visManager = new G4VisExecutive();
 		visManager->Initialize();
 
 //UI Manager
