@@ -12,11 +12,13 @@ class RunAction : public G4UserRunAction
 public:
 	RunAction();
 	~RunAction() override = default;
-
+	
 	void BeginOfRunAction(const G4Run*) override;
 	void EndOfRunAction(const G4Run*) override;
 
 	void AddEdep(G4double edep);
+
+	G4LogicalVolume* GetScoringVolume() const { return fPhantomLogical; }
 	
 private:
 	G4Accumulable<G4double> fEdep = 0.;     //fEdep = total deposited energy      
