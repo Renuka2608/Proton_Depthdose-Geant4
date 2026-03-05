@@ -1,0 +1,18 @@
+# Initialize run
+/run/initialize
+
+# Visualization settings
+/vis/open OGL
+/vis/viewer/set/style surface
+/vis/drawVolume
+
+# Show trajectories
+/vis/scene/add/trajectories smooth
+/vis/scene/endOfEventAction accumulate
+
+# Camera settings
+/vis/viewer/set/viewpointThetaPhi 90 0
+/vis/viewer/zoom 1.5
+
+# Beam
+/run/beamOn 20
