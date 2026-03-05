@@ -9,7 +9,7 @@ include(${Geant4_USE_FILE})
 file(GLOB sources src/*.cc)
 file(GLOB headers include/*.hh)
 
-add_executable(Proton_DepthDose main.cpp ${sources} ${headers})
+add_executable(Proton_DepthDose main.cc ${sources} ${headers})
 
 target_include_directories(Proton_DepthDose PUBLIC include)
 target_link_libraries(Proton_DepthDose ${Geant4_LIBRARIES})
