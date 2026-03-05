@@ -16,6 +16,8 @@ public:
 
 	virtual G4VPhysicalVolume* Construct();
 
+	G4LogicalVolume* GetScoringVolume() const { return fPhantomLogical; }
+
 protected:
 	G4LogicalVolume* fPhantomLogical;   //for later scoring access
 };
