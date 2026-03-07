@@ -1,3 +1,6 @@
+# Open visualization
+/vis/open OGL
+
 # Initialize run
 /run/initialize
 
@@ -13,6 +16,4 @@
 # Camera settings
 /vis/viewer/set/viewpointThetaPhi 90 0
 /vis/viewer/zoom 1.5
-
-# Beam
-/run/beamOn 20
+/vis/viewer/set/autoRefresh true
