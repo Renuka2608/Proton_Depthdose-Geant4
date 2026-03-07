@@ -8,7 +8,7 @@
 
 // Constructor & Destructor
 DetectorConstruction::DetectorConstruction()
-	:G4VDetectorConstruction(),
+	:G4VUserDetectorConstruction(),
 	fScoringVolume(nullptr)
 { }
 
@@ -78,5 +78,5 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 						0,					      //G4int copyNo - Copy number is used when you place multiple identical volumes.
 						true);
 
-		return phyWorld;
+		return physWorld;
 }
