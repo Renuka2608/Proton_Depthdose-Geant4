@@ -16,10 +16,10 @@ public:
 
 	virtual G4VPhysicalVolume* Construct();
 
-	G4LogicalVolume* GetScoringVolume() const { return fPhantomLogical; }
+	G4LogicalVolume* GetScoringVolume() const { return fScoringVolume; }
 
 protected:
-	G4LogicalVolume* fPhantomLogical;   //for later scoring access
+	G4LogicalVolume* fScoringVolume;   //for later scoring access
 };
 
 #endif
