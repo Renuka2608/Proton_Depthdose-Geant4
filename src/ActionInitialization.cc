@@ -5,6 +5,7 @@
 #include "RunAction.hh"
 #include "SteppingAction.hh"
 
+
 void ActionInitialization::BuildForMaster() const
 {
 	auto runAction = new RunAction;
