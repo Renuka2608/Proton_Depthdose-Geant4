@@ -4,11 +4,14 @@
 #include "G4UserRunAction.hh"
 #include "G4Accumulable.hh"
 #include "globals.hh"
+#include <fstream>
 
 class G4Run;
 
 class RunAction : public G4UserRunAction
 {
+	std::ofstream outFile;
+
 public:
 	RunAction();
 	~RunAction() override = default;
