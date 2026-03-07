@@ -1,0 +1,35 @@
+# Initialize run
+/run/initialize
+
+# Open visualization window
+/vis/open OGL
+
+# Create scene
+/vis/scene/create
+/vis/scene/add/world
+
+# Add trajectories
+/vis/scene/add/trajectories smooth
+
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/drawByParticleID-0/default/setDrawStepPts true
+/vis/modeling/trajectories/drawByParticleID-0/default/setStepPtsSize 2
+
+# Add coordinate axes
+/vis/scene/add/axes 0 0 0 50 cm
+
+# Set viewer
+/vis/viewer/set/style surface
+/vis/viewer/set/viewpointThetaPhi 70 20
+
+# Draw geometry
+/vis/drawVolume
+
+# Start visualization
+/vis/viewer/set/autoRefresh true
+/vis/viewer/flush
+
+# Run some events
+/run/beamOn 10
+
+/control/execute vis.mac
