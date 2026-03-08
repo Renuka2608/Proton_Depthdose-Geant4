@@ -18,7 +18,7 @@ SteppingAction::SteppingAction(EventAction* eventAction, RunAction* runAction)
 void SteppingAction::UserSteppingAction(const G4Step* step)
 {
     // DEBUG: confirm stepping action is being called at ALL
-    G4cout << "[SteppingAction] UserSteppingAction called." << G4endl;
+   // G4cout << "[SteppingAction] UserSteppingAction called." << G4endl;
 
     if (!fScoringVolume) {
         const auto detConstruction = static_cast<const DetectorConstruction*>(
@@ -42,7 +42,7 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
         ->GetVolume()->GetLogicalVolume();
 
     // DEBUG: print what volume each step is in
-    G4cout << "[SteppingAction] Current volume: " << volume->GetName() << G4endl;
+   // G4cout << "[SteppingAction] Current volume: " << volume->GetName() << G4endl;
 
     // check if we are in scoring volume
     if (volume != fScoringVolume) return;
@@ -51,12 +51,12 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
     G4double edepStep = step->GetTotalEnergyDeposit();
     G4double z = step->GetPreStepPoint()->GetPosition().z();
 
-    G4cout << "[SteppingAction] HIT! z=" << z / mm << " mm, edep="
-        << edepStep / MeV << " MeV" << G4endl;
+   /* G4cout << "[SteppingAction] HIT! z=" << z / mm << " mm, edep="
+        << edepStep / MeV << " MeV" << G4endl; */
 
 
     // Writing via RunAction's open file handle (no double-open conflict)
-    fRunAction->WriteCSVRow(z / mm, edepStep / MeV);
+    fRunAction->FillDepthDose(z / mm, edepStep / MeV);
 
 
     // Send energy to EventAction 
