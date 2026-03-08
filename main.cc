@@ -13,13 +13,13 @@
 
 int main(int argc, char** argv)
 {
-	// Detect interactive mode (if no arguments) and define UI session
+// Detect interactive mode (if no arguments) and define UI session
 	G4UIExecutive* ui = nullptr;
 	if (argc == 1) {
 	 ui = new G4UIExecutive(argc, argv);
 	}
 
-	// Stepping Precision
+// Stepping Precision
 	G4int precision = 4;
 		G4SteppingVerbose::UseBestUnit(precision);
 
@@ -55,6 +55,7 @@ int main(int argc, char** argv)
 		else {
 			// interactive mode
 			UImanager->ApplyCommand("/control/execute init_vis.mac");
+			G4cout << ">>> Entering interactive session. Close window manually." << G4endl;
 			ui->SessionStart();
 			delete ui;
 		}
