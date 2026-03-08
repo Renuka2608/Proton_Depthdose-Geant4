@@ -59,9 +59,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	G4double phantomSizeZ = 30 * cm;
 
 	G4Box* solidPhantom = new G4Box("Phantom",
-									worldSizeX / 2,
-									worldSizeY / 2,
-									worldSizeZ / 2);
+									phantomSizeX / 2,
+									phantomSizeY / 2,
+									phantomSizeZ / 2);
 		
 
 	fScoringVolume = new G4LogicalVolume(solidPhantom,
