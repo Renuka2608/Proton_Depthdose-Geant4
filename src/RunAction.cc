@@ -32,8 +32,8 @@ RunAction::RunAction()
 
 	//Register accumulables (total energy deposit and variance)
 	auto accumulableManager = G4AccumulableManager::Instance();
-	accumulableManager->Register(fEdep);
-	accumulableManager->Register(fEdep2);
+	accumulableManager->RegisterAccumulable(fEdep);
+	accumulableManager->RegisterAccumulable(fEdep2);
 
 	/*auto analysisManager = G4AnalysisManager::Instance();
 	analysisManager->SetVerboseLevel(1);
@@ -123,6 +123,16 @@ void RunAction::EndOfRunAction(const G4Run* run)
 	outFile.close();
 
 	G4cout << "CSV file initialized: braggPeak.csv" << G4endl;
+}
+
+void RunAction::WriteCSVRow(G4double z_mm, G4double edep_MeV)
+{
+	if (outFile.is_open()) {
+		outFile << z_mm << "," << edep_MeV << "\n";
+	}
+	else {
+		G4cout << "[RunAction] WARNING: CSV file not open when trying to write!" << G4endl;
+	}
 }
 
 void RunAction::AddEdep(G4double edep)
