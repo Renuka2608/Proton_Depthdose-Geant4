@@ -1,21 +1,15 @@
 #include "RunAction.hh"
-
 #include "DetectorConstruction.hh"
 #include "PrimaryGeneratorAction.hh"
 
 #include "G4AccumulableManager.hh"
-//#include "G4LogicalVolume.hh"
-//#include "G4ParticleDefinition.hh"
-//#include "G4ParticleGun.hh"
 #include "G4Run.hh"
 #include "G4RunManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
 #include <cmath>
-//#include "G4AnalysisManager.hh"
+#include "G4AnalysisManager.hh"
 #include "G4Accumulable.hh"
-#include <fstream>
-
 
 RunAction::RunAction()
 {
@@ -35,20 +29,27 @@ RunAction::RunAction()
 	accumulableManager->RegisterAccumulable(fEdep);
 	accumulableManager->RegisterAccumulable(fEdep2);
 
-	/*auto analysisManager = G4AnalysisManager::Instance();
+	auto analysisManager = G4AnalysisManager::Instance();
 	analysisManager->SetVerboseLevel(1);
-	analysisManager->SetDefaultFileType("csv");
-	*/
+	analysisManager->SetDefaultFileType("root");
+	analysisManager->SetNtupleMerging(true);       // merge threads automatically
 
-	/*analysisManager->CreateH1(
+
+	analysisManager->CreateH1(
 		"depthDose",
 		"Depth Dose Distribution",
-		300,
-		0.,                                 //300 bins and (0–300 mm) phantom
-		300*mm
-	);*/
+		300,                          // bins 
+		-150., 150.            // z range in mm
+	);
 	
+	// Create Ntuple for raw step data (optional but useful)
+	analysisManager->CreateNtuple("StepData", "Step-by-step data");
+	analysisManager->CreateNtupleDColumn("z_mm");      // column 0
+	analysisManager->CreateNtupleDColumn("edep_MeV");  // column 1
+	analysisManager->FinishNtuple();
 }
+
+
 void RunAction::BeginOfRunAction(const G4Run*)
 {
 	// don't store random seeds
@@ -58,24 +59,13 @@ void RunAction::BeginOfRunAction(const G4Run*)
 	auto accumulableManager = G4AccumulableManager::Instance();
 	accumulableManager->Reset();                                  //Resets total energy before starting the run
 
-	//auto analysisManager = G4AnalysisManager::Instance();
-	//analysisManager->OpenFile("braggPeak");                     //open root file
+	auto analysisManager = G4AnalysisManager::Instance();
+	analysisManager->OpenFile("braggPeak");                     //open root file
 
-	G4cout << "BeginOfRunAction executed" << G4endl;
-
-	outFile.open("braggPeak.csv");
-	if (!outFile.is_open())
-	{
-		G4cout << "ERROR: CSV file could not open!" << G4endl;
-	}
-	else
-	{
-		G4cout << "CSV file opened successfully!" << G4endl;
-		outFile << "Depth(mm),EnergyDeposit(MeV)" << std::endl;
-	}
-	
-
+	G4cout << "BeginOfRunAction : braggPeak.root opened." << G4endl;
 }
+
+
 
 void RunAction::EndOfRunAction(const G4Run* run)
 {
@@ -116,23 +106,20 @@ void RunAction::EndOfRunAction(const G4Run* run)
 		<< G4endl;
 	G4cout << "=============================================" << G4endl;
 
-	/*auto analysisManager = G4AnalysisManager::Instance();
+	auto analysisManager = G4AnalysisManager::Instance();
 	analysisManager->Write();
 	analysisManager->CloseFile();              //save root file
-	*/
-	outFile.close();
-
-	G4cout << "CSV file initialized: braggPeak.csv" << G4endl;
+	
+	G4cout << "braggPeak.root saved." << G4endl;	
 }
 
-void RunAction::WriteCSVRow(G4double z_mm, G4double edep_MeV)
+void RunAction::FillDepthDose(G4double z_mm, G4double edep_MeV)
 {
-	if (outFile.is_open()) {
-		outFile << z_mm << "," << edep_MeV << "\n";
-	}
-	else {
-		G4cout << "[RunAction] WARNING: CSV file not open when trying to write!" << G4endl;
-	}
+	auto analysisManager = G4AnalysisManager::Instance();
+	analysisManager->FillH1(0, z_mm, edep_MeV);      // fill histogram
+	analysisManager->FillNtupleDColumn(0, 0, z_mm);   // fill ntuple col 0
+	analysisManager->FillNtupleDColumn(0, 1, edep_MeV); // fill ntuple col 1
+	analysisManager->AddNtupleRow(0);
 }
 
 void RunAction::AddEdep(G4double edep)
