@@ -1,19 +1,34 @@
-# Open visualization
-/vis/open OGL
-
-# Initialize run
+# Initialize run FIRST
 /run/initialize
 
-# Visualization settings
-/vis/open OGL
-/vis/viewer/set/style surface
-/vis/drawVolume
+# Open visualization (once only)
+/vis/open VRML2FILE
 
-# Show trajectories
+# Create and populate scene
+/vis/scene/create
+/vis/scene/add/world
+
+# Trajectories
 /vis/scene/add/trajectories smooth
-/vis/scene/endOfEventAction accumulate
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/drawByParticleID-0/default/setDrawStepPts true
+/vis/modeling/trajectories/drawByParticleID-0/default/setStepPtsSize 2
 
-# Camera settings
-/vis/viewer/set/viewpointThetaPhi 90 0
-/vis/viewer/zoom 1.5
+# Axes
+/vis/scene/add/axes 0 0 0 50 cm
+
+# Viewer style
+/vis/viewer/set/style surface
+/vis/viewer/set/viewpointThetaPhi 70 20
 /vis/viewer/set/autoRefresh true
+
+# Draw geometry
+/vis/drawVolume
+/vis/viewer/flush
+
+# Fire a few events to see tracks
+/run/beamOn 10
+
+# DO NOT call /control/execute vis.mac here
+# DO NOT call /exit here
+# SessionStart() in main.cc keeps the window alive after this
