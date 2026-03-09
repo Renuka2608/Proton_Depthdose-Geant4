@@ -6,8 +6,6 @@
 #include "G4RunManager.hh"
 #include "G4Step.hh"
 #include "G4SystemOfUnits.hh"
-#include <fstream>
-
 
 // Update constructor to also take RunAction*
 SteppingAction::SteppingAction(EventAction* eventAction, RunAction* runAction)
@@ -51,14 +49,10 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
     G4double edepStep = step->GetTotalEnergyDeposit();
     G4double z = step->GetPreStepPoint()->GetPosition().z();
 
-   /* G4cout << "[SteppingAction] HIT! z=" << z / mm << " mm, edep="
-        << edepStep / MeV << " MeV" << G4endl; */
-
-
     // Writing via RunAction's open file handle (no double-open conflict)
     fRunAction->FillDepthDose(z / mm, edepStep / MeV);
 
 
     // Send energy to EventAction 
     fEventAction->AddEdep(edepStep);
-}                                                    // <-- closing brace for UserSteppingAction
+}    //closing brace for UserSteppingAction
