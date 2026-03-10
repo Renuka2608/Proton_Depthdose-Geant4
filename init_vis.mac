@@ -2,7 +2,7 @@
 /run/initialize
 
 # Open visualization (once only)
-/vis/open VRML2FILE
+/vis/open OGL 800x600
 
 # Create and populate scene
 /vis/scene/create
