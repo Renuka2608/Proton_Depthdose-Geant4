@@ -1,5 +1,5 @@
 # Open visualization
-/vis/open VRML2FILE
+/vis/open OGL 800x600
 
 # Scene
 /vis/scene/create
