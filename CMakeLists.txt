@@ -11,7 +11,7 @@ add_executable(Proton_DepthDose main.cc ${sources} ${headers})
 target_include_directories(Proton_DepthDose PUBLIC include)
 target_link_libraries(Proton_DepthDose ${Geant4_LIBRARIES})
 
-# Auto-copy mac files to output directory (Debug/Release) on every build
+# Auto-copy mac files to output directory (Release) on every build
 foreach(_mac run.mac init_vis.mac vis.mac)
     configure_file(
         ${CMAKE_SOURCE_DIR}/${_mac}
