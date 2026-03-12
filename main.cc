@@ -1,9 +1,7 @@
 //Main Program of Proton Depth Dose
-
 #include "DetectorConstruction.hh"
 #include "ActionInitialization.hh"
 #include "QBBC.hh"
-
 #include "G4RunManagerFactory.hh"
 #include "G4SteppingVerbose.hh"
 #include "G4UIExecutive.hh"
