@@ -39,7 +39,7 @@ RunAction::RunAction()
 		"depthDose",
 		"Depth Dose Distribution",
 		300,                          // bins 
-		-150., 150.            // z range in mm
+		0., 300.            // z range in mm
 	);
 	
 	// Create Ntuple for raw step data (optional but useful)
