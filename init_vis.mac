@@ -1,18 +1,32 @@
 # Initialize run FIRST
 /run/initialize
 
-# Open visualization (once only)
+# Open OpenGL Qt window
 /vis/open OGL 800x600
 
-# Create and populate scene
+# Create scene
 /vis/scene/create
-/vis/scene/add/world
 
 # Trajectories
 /vis/scene/add/trajectories smooth
+/vis/scene/endOfEventAction accumulate    
 /vis/modeling/trajectories/create/drawByParticleID
 /vis/modeling/trajectories/drawByParticleID-0/default/setDrawStepPts true
 /vis/modeling/trajectories/drawByParticleID-0/default/setStepPtsSize 2
+
+# Particle colors
+/vis/modeling/trajectories/drawByParticleID-0/set proton blue
+/vis/modeling/trajectories/drawByParticleID-0/set e- red
+/vis/modeling/trajectories/drawByParticleID-0/set gamma green
+/vis/modeling/trajectories/drawByParticleID-0/set neutron yellow
+
+# Make world volume visible as wireframe
+/vis/geometry/set/visibility World 0 true
+/vis/geometry/set/forceSolid World 0 false    # wireframe for world
+/vis/geometry/set/forceSolid Phantom 0 true   # solid for phantom
+
+# Phantom color - light blue like water
+/vis/geometry/set/colour Phantom 0 0 0.8 1 0.3  # R G B transparency
 
 # Axes
 /vis/scene/add/axes 0 0 0 50 cm
@@ -20,15 +34,12 @@
 # Viewer style
 /vis/viewer/set/style surface
 /vis/viewer/set/viewpointThetaPhi 70 20
+/vis/viewer/zoom 1.5
 /vis/viewer/set/autoRefresh true
 
 # Draw geometry
 /vis/drawVolume
 /vis/viewer/flush
 
-# Fire a few events to see tracks
+# Fire events to see tracks
 /run/beamOn 10
-
-# DO NOT call /control/execute vis.mac here
-# DO NOT call /exit here
-# SessionStart() in main.cc keeps the window alive after this
